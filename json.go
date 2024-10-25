@@ -189,7 +189,7 @@ func createProperty(propName string, jMap *Object) {
 }
 
 func appendValue(propName string, value string, jMap *Object) error {
-	var result any
+	var result interface{}
 	if value[0] == '[' && (value[len(value)-1] == '}' || (value[len(value)-2] == ']' && value[len(value)-1] == ',')) {
 		result = parseArray(value[:len(value)-1])
 	} else if value[0] == '"' && (value[len(value)-1] == '}' || (value[len(value)-2] == '"' && value[len(value)-1] == ',')) {
