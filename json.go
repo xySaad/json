@@ -227,10 +227,16 @@ func appendValue(propName string, value string, jMap *[]Object, arrayIndex *int)
 		}
 		result = object
 	} else {
-		// to do check valid values numbers / boolean
 		value = value[:len(value)-1]
-		result = value
-		// fmt.Println("invalid value type: \n" + value)
+		if value == "true" || value == "false" || value == "null" {
+			result = value
+		} else {
+			num, err := strconv.Atoi(value)
+			if err != nil {
+				return errors.New("invalid value type: " + value)
+			}
+			result = num
+		}
 	}
 
 	if len(propName) > 0 {
