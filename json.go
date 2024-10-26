@@ -1,4 +1,4 @@
-package utils
+package gosonify
 
 import (
 	"errors"
@@ -16,12 +16,15 @@ type token struct {
 	sep   rune
 }
 
-type stateMap map[rune]*token
-type Object map[string]interface{}
+type (
+	stateMap map[rune]*token
+	Object   map[string]interface{}
+)
 
 func JsonDecoder() *Json {
 	return &Json{}
 }
+
 func (s stateMap) init() stateMap {
 	object := &token{start: '{', end: '}', depth: 0, sep: ','}
 	array := &token{start: '[', end: ']', depth: 0, sep: ','}
@@ -38,19 +41,20 @@ func (s stateMap) init() stateMap {
 	}
 }
 
-func (j Json) Decode(raw string) (Object, error) {
+func (j Json) Decode(raw string) ([]Object, error) {
 	rawR := []rune(raw)
 	state := stateMap{}.init()
 	stack := []rune{}
 	index := 0
 	depth := 0
-	var result Object = make(Object)
+	result := make([]Object, 0)
 	property := ""
 	var value string
 	inProp := false
 	inValue := false
 	inArray := false
 	prevProp := ""
+	arrayIndex := 0
 
 	for index < len(rawR) {
 		char := rawR[index]
@@ -65,7 +69,7 @@ func (j Json) Decode(raw string) (Object, error) {
 				inProp = true
 			} else {
 				// fmt.Println(value)
-				createProperty(property, &result)
+				createProperty(property, &result, &arrayIndex)
 				if !inValue {
 					prevProp = property
 					property = ""
@@ -78,7 +82,7 @@ func (j Json) Decode(raw string) (Object, error) {
 			if !inArray || (inArray && (stack)[len(stack)-1] == ':') {
 				inValue = false
 				if len(value) > 1 {
-					err := appendValue(prevProp, strings.TrimSpace(value), &result)
+					err := appendValue(prevProp, strings.TrimSpace(value), &result, &arrayIndex)
 					if err != nil {
 						return nil, err
 					}
@@ -87,7 +91,6 @@ func (j Json) Decode(raw string) (Object, error) {
 				}
 				value = ""
 			}
-
 		} else if char == '[' {
 			inArray = true
 		} else if char == ']' {
@@ -95,7 +98,7 @@ func (j Json) Decode(raw string) (Object, error) {
 		} else if char == '}' {
 			inValue = false
 			if len(value) > 1 {
-				err := appendValue(prevProp, strings.TrimSpace(value), &result)
+				err := appendValue(prevProp, strings.TrimSpace(value), &result, &arrayIndex)
 				if err != nil {
 					return nil, err
 				}
@@ -126,6 +129,7 @@ func (j Json) Decode(raw string) (Object, error) {
 }
 
 func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *token, isLastChar bool, index int) error {
+	// fmt.Println(*stack)
 	/* debuging
 
 	fmt.Println(*stack)
@@ -141,7 +145,6 @@ func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *toke
 
 	if len(*stack) > 1 && state[(*stack)[len(*stack)-1]].end == ',' && state[(*stack)[len(*stack)-1]].end == '}' {
 		*stack = (*stack)[:len(*stack)-1]
-
 	}
 	skip := false
 
@@ -192,13 +195,24 @@ func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *toke
 	return nil
 }
 
-func createProperty(propName string, jMap *Object) {
+func createProperty(propName string, jMap *[]Object, arrayIndex *int) {
+	if len((*jMap)) > *arrayIndex && len(propName) > 0 {
+		_, ok := (*jMap)[*arrayIndex][propName[:len(propName)-1]]
+		if ok {
+			*arrayIndex++
+		}
+	}
+
 	if len(propName) > 0 {
-		(*jMap)[propName[:len(propName)-1]] = nil
+		if len((*jMap)) <= *arrayIndex {
+			(*jMap) = append((*jMap), make(Object))
+		}
+
+		(*jMap)[*arrayIndex][propName[:len(propName)-1]] = nil
 	}
 }
 
-func appendValue(propName string, value string, jMap *Object) error {
+func appendValue(propName string, value string, jMap *[]Object, arrayIndex *int) error {
 	var result interface{}
 	if value[0] == '[' && (value[len(value)-1] == '}' || (value[len(value)-2] == ']' && value[len(value)-1] == ',')) {
 		result = parseArray(value[:len(value)-1])
@@ -206,18 +220,21 @@ func appendValue(propName string, value string, jMap *Object) error {
 		value = value[1 : len(value)-2]
 		result = value
 	} else if value[0] == '{' && (value[len(value)-1] == '}' || (value[len(value)-2] == '"' && value[len(value)-1] == ',')) {
-		object, err := parseObject(value)
+		object, err := parseObject(value, arrayIndex)
 		if err != nil {
 			fmt.Println(value)
 			return err
 		}
 		result = object
 	} else {
+		// to do check valid values numbers / boolean
+		value = value[:len(value)-1]
+		result = value
 		// fmt.Println("invalid value type: \n" + value)
 	}
 
 	if len(propName) > 0 {
-		(*jMap)[propName[:len(propName)-1]] = result
+		(*jMap)[*arrayIndex][propName[:len(propName)-1]] = result
 		// fmt.Println(propName[:len(propName)-1], result)
 	}
 	return nil
@@ -246,8 +263,8 @@ func parseArray(str string) []string {
 	return array
 }
 
-func parseObject(raw string) (Object, error) {
-	result := make(Object)
+func parseObject(raw string, arrayIndex *int) ([]Object, error) {
+	result := make([]Object, 0)
 	rawR := []rune(raw)
 	state := stateMap{}.init()
 	stack := []rune{}
@@ -275,7 +292,7 @@ func parseObject(raw string) (Object, error) {
 			if !inProp {
 				inProp = true
 			} else {
-				createProperty(property, &result)
+				createProperty(property, &result, arrayIndex)
 				if !inValue {
 					prevProp = property
 					property = ""
@@ -290,7 +307,7 @@ func parseObject(raw string) (Object, error) {
 				value += "}"
 			}
 			if len(value) > 2 {
-				err := appendValue(prevProp, strings.TrimSpace(value), &result)
+				err := appendValue(prevProp, strings.TrimSpace(value), &result, arrayIndex)
 				if err != nil {
 					return nil, err
 				}
@@ -303,7 +320,7 @@ func parseObject(raw string) (Object, error) {
 		} else if char == '}' {
 			inValue = false
 			if len(value) > 2 {
-				err := appendValue(prevProp, strings.TrimSpace(value), &result)
+				err := appendValue(prevProp, strings.TrimSpace(value), &result, arrayIndex)
 				if err != nil {
 					return nil, err
 				}
