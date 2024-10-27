@@ -42,107 +42,17 @@ func (s stateMap) init() stateMap {
 }
 
 func (j Json) Decode(raw string) ([]Object, error) {
-	rawR := []rune(raw)
-	state := stateMap{}.init()
-	stack := []rune{}
-	index := 0
-	depth := 0
-	result := make([]Object, 0)
-	property := ""
-	var value string
-	inProp := false
-	inValue := false
-	inArray := false
-	prevProp := ""
+
 	arrayIndex := 0
 
-	for index < len(rawR) {
-		char := rawR[index]
-		if inProp && !inValue {
-			property += string(char)
-		} else if inValue {
-			value += string(char)
-		}
-
-		if char == '"' {
-			if !inProp {
-				inProp = true
-			} else {
-				// fmt.Println(value)
-				createProperty(property, &result, &arrayIndex)
-				if !inValue {
-					prevProp = property
-					property = ""
-				}
-				inProp = false
-			}
-		} else if char == ':' {
-			inValue = true
-		} else if char == ',' && (stack)[len(stack)-1] != '{' {
-			if !inArray || (inArray && (stack)[len(stack)-1] == ':') {
-				inValue = false
-				if len(value) > 1 {
-					err := appendValue(prevProp, strings.TrimSpace(value), &result, &arrayIndex)
-					if err != nil {
-						return nil, err
-					}
-				} else {
-					// fmt.Println("small value:", value)
-				}
-				value = ""
-			}
-		} else if char == '[' {
-			inArray = true
-		} else if char == ']' {
-			inArray = false
-		} else if char == '}' {
-			inValue = false
-			if len(value) > 1 {
-				err := appendValue(prevProp, strings.TrimSpace(value), &result, &arrayIndex)
-				if err != nil {
-					return nil, err
-				}
-			} else {
-				// fmt.Println("small value", value)
-			}
-			value = ""
-		}
-
-		if index > 0 && char == ',' && char == rawR[index-1] {
-			return nil, errors.New("expected1: " + string(state[(stack)[len(stack)-1]].end) + " found: " + string(char))
-		}
-		t, exist := state[char]
-		if exist {
-			err := decoderHelper(state, &stack, &depth, char, t, index == len(raw)-1, index)
-			if err != nil {
-				return result, err
-			}
-		}
-		index++
+	object, err := parseObject(raw, &arrayIndex)
+	if err != nil {
+		return nil, err
 	}
-
-	if depth != 0 {
-		return nil, fmt.Errorf("mismatched brackets: depth is %d at the end of parsing, expected: %q", depth, state[stack[len(stack)-1]].end)
-	}
-	// fmt.Println(value)
-	return result, nil
+	return object, nil
 }
 
 func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *token, isLastChar bool, index int) error {
-	// fmt.Println(*stack)
-	/* debuging
-
-	fmt.Println(*stack)
-	fmt.Print("character: ", string(char), " token depth: ", t.depth, " stack length: ", len(*stack), " ")
-
-	if len(*stack) > 0 {
-		fmt.Println("token in stack:", string(state[(*stack)[len(*stack)-1]].start), string(state[(*stack)[len(*stack)-1]].end))
-	} else {
-		fmt.Println("")
-	}
-
-	*/
-
 	if len(*stack) > 1 && state[(*stack)[len(*stack)-1]].end == ',' && state[(*stack)[len(*stack)-1]].end == '}' {
 		*stack = (*stack)[:len(*stack)-1]
 	}
@@ -156,30 +66,25 @@ func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *toke
 		isUrl := len(*stack) > 1 && state[(*stack)[len(*stack)-1]].end == '"' && state[(*stack)[len(*stack)-2]].start == ':' && char == ':'
 		if !isUrl {
 			*stack = append(*stack, char)
-			// fmt.Println("appending:", string(char), strconv.Itoa(index))
 			if t.depth != -1 {
 				*depth++
 				t.depth++
 			}
 		}
 	} else if len(*stack) > 0 && state[(*stack)[len(*stack)-1]].sep == char {
-		// fmt.Println("this is a seperator:", char)
 	} else if char == t.end {
 		if len(*stack) > 0 {
 			if state[(*stack)[len(*stack)-1]].start != t.start {
 				if state[(*stack)[len(*stack)-1]].end == ',' && isLastChar {
 					*stack = (*stack)[:len(*stack)-1]
 
-					// fmt.Println("skip last ,")
 				} else if state[(*stack)[len(*stack)-1]].end == ',' && state[(*stack)[len(*stack)-2]].end == '}' {
 					*stack = (*stack)[:len(*stack)-1]
 
-					// fmt.Println("prev object closed yet")
 				} else {
 					return errors.New("expected2: " + string(state[(*stack)[len(*stack)-1]].end) + " found: " + string(char) + " index: " + strconv.Itoa(index))
 				}
 			}
-			// fmt.Println("popping:", string((*stack)[len(*stack)-1]), strconv.Itoa(index))
 			*stack = (*stack)[:len(*stack)-1]
 
 		} else {
@@ -190,8 +95,6 @@ func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *toke
 			t.depth--
 		}
 	}
-	// for debuggin
-	// fmt.Printf("Token Start: %s, End: %s, TokenDepth: %d, Depth: %d\n", string(t.start), string(t.end), t.depth, *depth)
 	return nil
 }
 
@@ -222,7 +125,6 @@ func appendValue(propName string, value string, jMap *[]Object, arrayIndex *int)
 	} else if value[0] == '{' && (value[len(value)-1] == '}' || (value[len(value)-2] == '"' && value[len(value)-1] == ',')) {
 		object, err := parseObject(value, arrayIndex)
 		if err != nil {
-			fmt.Println(value)
 			return err
 		}
 		result = object
@@ -241,7 +143,6 @@ func appendValue(propName string, value string, jMap *[]Object, arrayIndex *int)
 
 	if len(propName) > 0 {
 		(*jMap)[*arrayIndex][propName[:len(propName)-1]] = result
-		// fmt.Println(propName[:len(propName)-1], result)
 	}
 	return nil
 }
@@ -270,12 +171,12 @@ func parseArray(str string) []string {
 }
 
 func parseObject(raw string, arrayIndex *int) ([]Object, error) {
-	result := make([]Object, 0)
 	rawR := []rune(raw)
 	state := stateMap{}.init()
 	stack := []rune{}
 	index := 0
 	depth := 0
+	result := make([]Object, 0)
 	property := ""
 	var value string
 	inProp := false
@@ -285,16 +186,13 @@ func parseObject(raw string, arrayIndex *int) ([]Object, error) {
 
 	for index < len(rawR) {
 		char := rawR[index]
-		if inArray {
-			// store array
-		}
 		if inProp && !inValue {
 			property += string(char)
 		} else if inValue {
 			value += string(char)
 		}
-
-		if char == '"' {
+		if char == '{' {
+		} else if char == '"' {
 			if !inProp {
 				inProp = true
 			} else {
@@ -307,29 +205,30 @@ func parseObject(raw string, arrayIndex *int) ([]Object, error) {
 			}
 		} else if char == ':' {
 			inValue = true
-		} else if char == ',' && !inArray {
-			inValue = false
-			if rawR[index+1] == '}' {
-				value += "}"
-			}
-			if len(value) > 2 {
-				err := appendValue(prevProp, strings.TrimSpace(value), &result, arrayIndex)
-				if err != nil {
-					return nil, err
+		} else if char == ',' && (stack)[len(stack)-1] != '{' {
+			if !inArray || (inArray && (stack)[len(stack)-1] == ':') {
+				inValue = false
+				if len(value) > 1 {
+					err := appendValue(prevProp, strings.TrimSpace(value), &result, arrayIndex)
+					if err != nil {
+						return nil, err
+					}
+				} else {
 				}
+				value = ""
 			}
-			value = ""
 		} else if char == '[' {
 			inArray = true
 		} else if char == ']' {
 			inArray = false
 		} else if char == '}' {
 			inValue = false
-			if len(value) > 2 {
+			if len(value) > 1 {
 				err := appendValue(prevProp, strings.TrimSpace(value), &result, arrayIndex)
 				if err != nil {
 					return nil, err
 				}
+			} else {
 			}
 			value = ""
 		}
@@ -341,7 +240,7 @@ func parseObject(raw string, arrayIndex *int) ([]Object, error) {
 		if exist {
 			err := decoderHelper(state, &stack, &depth, char, t, index == len(raw)-1, index)
 			if err != nil {
-				return nil, err
+				return result, err
 			}
 		}
 		index++
@@ -350,6 +249,5 @@ func parseObject(raw string, arrayIndex *int) ([]Object, error) {
 	if depth != 0 {
 		return nil, fmt.Errorf("mismatched brackets: depth is %d at the end of parsing, expected: %q", depth, state[stack[len(stack)-1]].end)
 	}
-
 	return result, nil
 }
