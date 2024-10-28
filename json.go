@@ -3,7 +3,6 @@ package gosonify
 import (
 	"errors"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -110,13 +109,6 @@ func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *toke
 }
 
 func createProperty(propName string, jMap *[]Object, arrayIndex *int) error {
-	if len((*jMap)) > *arrayIndex && len(propName) > 0 {
-		_, ok := (*jMap)[*arrayIndex][propName[:len(propName)-1]]
-		if ok {
-			*arrayIndex++
-		}
-	}
-
 	if len(propName) > 0 {
 		if len((*jMap)) <= *arrayIndex {
 			(*jMap) = append((*jMap), make(Object))
@@ -204,11 +196,9 @@ func parseArray(str string) ([]Object, error) {
 				return nil, err
 			}
 			err = appendValue(strconv.Itoa(arrayIndex), item, &result, &arrayIndex)
-			fmt.Println(item)
 
 			if err != nil {
 				fmt.Println("err append in parse array")
-				os.Exit(1)
 				return nil, err
 			}
 			arrayIndex++
