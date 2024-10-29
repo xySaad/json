@@ -21,8 +21,16 @@ type token struct {
 
 type (
 	stateMap map[rune]*token
-	Object   map[string]interface{}
+	Object   map[string]any
 )
+
+func (o Object) Get(holder any, path string) error {
+	err := getHelper(o, holder, path)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 type Gosonified interface {
 	Get(holder any, path string) error
