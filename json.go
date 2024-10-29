@@ -24,10 +24,42 @@ type (
 	Object   map[string]interface{}
 )
 
-func getHelper(jsonData any, holder *any, path string) error {
-	if len(path) == 0 {
+type Gosonified interface {
+	Get(holder any, path string) error
+}
 
-		*holder = jsonData
+func getHelper(jsonData any, holder any, path string) error {
+	if len(path) == 0 {
+		switch h := holder.(type) {
+		case *[]any:
+			jsonArray, ok := jsonData.([]any)
+			if !ok {
+				return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+			}
+			*h = jsonArray
+		case *Object:
+			jsonObject, ok := jsonData.(Object)
+			if !ok {
+				return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+			}
+			*h = jsonObject
+		case *[]Object:
+			jsonArray, ok := jsonData.([]any)
+			if !ok {
+				return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+			}
+			var jsonArrayOfObject []Object
+			for _, arrayElement := range jsonArray {
+				object, ok := arrayElement.(Object)
+				if !ok {
+					return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+				}
+				jsonArrayOfObject = append(jsonArrayOfObject, object)
+			}
+			*h = jsonArrayOfObject
+		default:
+			return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+		}
 		return nil
 	}
 	if path[0] == '.' {
@@ -39,7 +71,10 @@ func getHelper(jsonData any, holder *any, path string) error {
 			return errors.New("err getting")
 		}
 		objectIndex := strings.Split(path, "[")[0]
-		getHelper(object[objectIndex], holder, path[len(objectIndex):])
+		err := getHelper(object[objectIndex], holder, path[len(objectIndex):])
+		if err != nil {
+			return err
+		}
 	} else {
 		array, ok := jsonData.([]any)
 		if !ok {
@@ -52,17 +87,16 @@ func getHelper(jsonData any, holder *any, path string) error {
 		if err != nil {
 			return err
 		}
-		getHelper(array[num], holder, nextPath)
+		err = getHelper(array[num], holder, nextPath)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
 
 func (j *Json) Get(holder any, path string) error {
-	pointer, ispointer := holder.(*any)
-	if !ispointer {
-		return errors.New("holder is not a pointer")
-	}
-	err := getHelper(j.value, pointer, path)
+	err := getHelper(j.value, holder, path)
 	if err != nil {
 		return err
 	}
@@ -90,22 +124,21 @@ func (s stateMap) init() stateMap {
 	}
 }
 
-func (j *Json) Decode(raw string) error {
-
+func (j *Json) Decode(raw string) (Gosonified, error) {
 	var err error
 	if raw[0] == '[' {
 		(*j).value, err = parseArray(raw[1 : len(raw)-1])
 		if err != nil {
-			return err
+			return nil, err
 		}
 	} else {
 		(*j).value, err = parseObject(raw)
 		if err != nil {
 			fmt.Println("err parseObject in Decode")
-			return err
+			return nil, err
 		}
 	}
-	return nil
+	return j, nil
 }
 
 func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *token, isLastChar bool, index int) error {
