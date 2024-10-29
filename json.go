@@ -94,7 +94,7 @@ func (j *Json) Decode(raw string) error {
 
 	var err error
 	if raw[0] == '[' {
-		(*j).value, err = parseArray(raw)
+		(*j).value, err = parseArray(raw[1 : len(raw)-1])
 		if err != nil {
 			return err
 		}
