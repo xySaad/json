@@ -8,7 +8,9 @@ import (
 	"strings"
 )
 
-type Json struct{}
+type Json struct {
+	value any
+}
 
 type token struct {
 	start rune
@@ -21,6 +23,51 @@ type (
 	stateMap map[rune]*token
 	Object   map[string]interface{}
 )
+
+func getHelper(jsonData any, holder *any, path string) error {
+	if len(path) == 0 {
+
+		*holder = jsonData
+		return nil
+	}
+	if path[0] == '.' {
+		path = path[1:]
+	}
+	if path[0] != '[' {
+		object, ok := jsonData.(Object)
+		if !ok {
+			return errors.New("err getting")
+		}
+		objectIndex := strings.Split(path, "[")[0]
+		getHelper(object[objectIndex], holder, path[len(objectIndex):])
+	} else {
+		array, ok := jsonData.([]any)
+		if !ok {
+			return errors.New("err getting")
+		}
+		arrayIndexStart := strings.Split(path, "[")[1]
+		arrayIndex := strings.Split(arrayIndexStart, "]")[0]
+		nextPath := path[len(path)-(len(path)-1-len(arrayIndex)-1):]
+		num, err := strconv.Atoi(arrayIndex)
+		if err != nil {
+			return err
+		}
+		getHelper(array[num], holder, nextPath)
+	}
+	return nil
+}
+
+func (j *Json) Get(holder any, path string) error {
+	pointer, ispointer := holder.(*any)
+	if !ispointer {
+		return errors.New("holder is not a pointer")
+	}
+	err := getHelper(j.value, pointer, path)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 func NewDecoder() *Json {
 	return &Json{}
@@ -43,23 +90,22 @@ func (s stateMap) init() stateMap {
 	}
 }
 
-func (j *Json) Decode(raw string) (any, error) {
+func (j *Json) Decode(raw string) error {
 
 	var err error
-	var result any
 	if raw[0] == '[' {
-		result, err = parseArray(raw)
+		(*j).value, err = parseArray(raw)
 		if err != nil {
-			return nil, err
+			return err
 		}
 	} else {
-		result, err = parseObject(raw)
+		(*j).value, err = parseObject(raw)
 		if err != nil {
 			fmt.Println("err parseObject in Decode")
-			return nil, err
+			return err
 		}
 	}
-	return result, nil
+	return nil
 }
 
 func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *token, isLastChar bool, index int) error {
