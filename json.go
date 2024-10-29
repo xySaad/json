@@ -3,6 +3,7 @@ package gosonify
 import (
 	"errors"
 	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
 )
@@ -21,7 +22,7 @@ type (
 	Object   map[string]interface{}
 )
 
-func JsonDecoder() *Json {
+func NewDecoder() *Json {
 	return &Json{}
 }
 
@@ -42,10 +43,10 @@ func (s stateMap) init() stateMap {
 	}
 }
 
-func (j Json) Decode(raw string) ([]Object, error) {
+func (j *Json) Decode(raw string) (any, error) {
 
-	var result []Object
 	var err error
+	var result any
 	if raw[0] == '[' {
 		result, err = parseArray(raw)
 		if err != nil {
@@ -58,7 +59,6 @@ func (j Json) Decode(raw string) ([]Object, error) {
 			return nil, err
 		}
 	}
-
 	return result, nil
 }
 
@@ -108,25 +108,19 @@ func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *toke
 	return nil
 }
 
-func createProperty(propName string, jMap *[]Object, arrayIndex *int) error {
+func createProperty(propName string, jMap *Object) error {
 	if len(propName) > 0 {
-		if len((*jMap)) <= *arrayIndex {
-			(*jMap) = append((*jMap), make(Object))
-		}
-		if len((*jMap)) <= *arrayIndex {
-			return errors.New("invalid array index")
-		}
-		(*jMap)[*arrayIndex][propName[:len(propName)-1]] = nil
+		(*jMap)[propName[:len(propName)-1]] = nil
 	}
 	return nil
 }
 
-func appendValue(propName string, value string, jMap *[]Object, arrayIndex *int) error {
+func appendValue(propName string, value string, jMap any) error {
 	value = strings.TrimSpace(value)
 	if len(value) == 0 {
 		return nil
 	}
-	var result interface{}
+	var result any
 	var err error
 
 	if value[0] == '[' && (value[len(value)-1] == ']' || (value[len(value)-2] == ']' && value[len(value)-1] == ',')) {
@@ -157,15 +151,25 @@ func appendValue(propName string, value string, jMap *[]Object, arrayIndex *int)
 			result = num
 		}
 	}
-
-	if len(propName) > 0 {
-		(*jMap)[*arrayIndex][propName[:len(propName)-1]] = result
+	switch v := (jMap).(type) {
+	case *Object:
+		if len(propName) > 0 {
+			(*v)[propName[:len(propName)-1]] = result
+		}
+	case *[]any:
+		*v = append(*v, result)
+	default:
+		var Type reflect.Type
+		Type = reflect.TypeOf(v)
+		fmt.Println(v)
+		return errors.New("invalid type" + Type.Name())
 	}
+
 	return nil
 }
 
-func parseArray(str string) ([]Object, error) {
-	result := []Object{}
+func parseArray(str string) ([]any, error) {
+	result := []any{}
 	state := stateMap{}.init()
 	rawR := []rune(str)
 	index := 0
@@ -189,14 +193,10 @@ func parseArray(str string) ([]Object, error) {
 				return nil, err
 			}
 		}
-		if len(stack) == 0 {
-			err := createProperty(strconv.Itoa(arrayIndex), &result, &arrayIndex)
-			if err != nil {
-				fmt.Println("err createProperty in parseArray")
-				return nil, err
-			}
-			err = appendValue(strconv.Itoa(arrayIndex), item, &result, &arrayIndex)
 
+		if len(stack) == 0 {
+
+			err := appendValue("array", item, &result)
 			if err != nil {
 				fmt.Println("err append in parse array")
 				return nil, err
@@ -211,20 +211,19 @@ func parseArray(str string) ([]Object, error) {
 	return result, nil
 }
 
-func parseObject(raw string) ([]Object, error) {
+func parseObject(raw string) (Object, error) {
 	raw = strings.TrimSpace(raw)
 	rawR := []rune(raw[1 : len(raw)-1])
 	state := stateMap{}.init()
 	stack := []rune{}
 	index := 0
 	depth := 0
-	result := make([]Object, 0)
+	result := Object{}
 	property := ""
 	var value string
 	inProp := false
 	inValue := false
 	prevProp := ""
-	arrayIndex := 0
 
 	for index < len(rawR) {
 		char := rawR[index]
@@ -238,7 +237,7 @@ func parseObject(raw string) ([]Object, error) {
 			if !inProp {
 				inProp = true
 			} else {
-				err := createProperty(property, &result, &arrayIndex)
+				err := createProperty(property, &result)
 				if err != nil {
 					fmt.Println("err createPropery in parseObject")
 					return nil, err
@@ -268,7 +267,7 @@ func parseObject(raw string) ([]Object, error) {
 		}
 
 		if len(stack) == 0 && len(value) > 0 {
-			err := appendValue(prevProp, value, &result, &arrayIndex)
+			err := appendValue(prevProp, value, &result)
 			if err != nil {
 				fmt.Println("err append in parse object")
 				return nil, err
