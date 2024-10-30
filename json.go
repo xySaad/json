@@ -23,6 +23,9 @@ type (
 	stateMap map[rune]*token
 	Object   map[string]any
 )
+type Gosonified interface {
+	Get(holder any, path string) error
+}
 
 func (o Object) Get(holder any, path string) error {
 	err := getHelper(o, holder, path)
@@ -30,10 +33,6 @@ func (o Object) Get(holder any, path string) error {
 		return err
 	}
 	return nil
-}
-
-type Gosonified interface {
-	Get(holder any, path string) error
 }
 
 func getHelper(jsonData any, holder any, path string) error {
@@ -103,16 +102,12 @@ func getHelper(jsonData any, holder any, path string) error {
 	return nil
 }
 
-func (j *Json) Get(holder any, path string) error {
+func (j Json) Get(holder any, path string) error {
 	err := getHelper(j.value, holder, path)
 	if err != nil {
 		return err
 	}
 	return nil
-}
-
-func NewDecoder() *Json {
-	return &Json{}
 }
 
 func (s stateMap) init() stateMap {
@@ -132,21 +127,23 @@ func (s stateMap) init() stateMap {
 	}
 }
 
-func (j *Json) Decode(raw string) (Gosonified, error) {
+func Decode(raw string) (Gosonified, error) {
+
 	var err error
+	var result Json
 	if raw[0] == '[' {
-		(*j).value, err = parseArray(raw[1 : len(raw)-1])
+		result.value, err = parseArray(raw[1 : len(raw)-1])
 		if err != nil {
 			return nil, err
 		}
 	} else {
-		(*j).value, err = parseObject(raw)
+		result.value, err = parseObject(raw)
 		if err != nil {
 			fmt.Println("err parseObject in Decode")
 			return nil, err
 		}
 	}
-	return j, nil
+	return result, nil
 }
 
 func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *token, isLastChar bool, index int) error {
