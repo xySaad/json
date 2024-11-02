@@ -1,4 +1,4 @@
-package gosonify
+package json
 
 import (
 	"errors"
@@ -23,7 +23,7 @@ type (
 	stateMap map[rune]*token
 	Object   map[string]any
 )
-type Gosonified interface {
+type getter interface {
 	Get(holder any, path string) error
 }
 
@@ -127,7 +127,7 @@ func (s stateMap) init() stateMap {
 	}
 }
 
-func Decode(raw string) (Gosonified, error) {
+func Decode(raw string) (getter, error) {
 
 	var err error
 	var result Json
