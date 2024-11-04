@@ -204,6 +204,9 @@ func appendValue(propName string, value string, jMap any) error {
 	if len(value) == 0 {
 		return nil
 	}
+	if value[len(value)-1] == ',' {
+		value = value[:len(value)-1]
+	}
 	var result any
 	var err error
 
@@ -213,9 +216,6 @@ func appendValue(propName string, value string, jMap any) error {
 			fmt.Println("err parseArray in appendValue")
 			return err
 		}
-	} else if value[0] == '"' && (value[len(value)-1] == '"' || ((value[len(value)-2] == '"' || value[len(value)-2] == '}') && value[len(value)-1] == ',')) {
-		value = value[1 : len(value)-2]
-		result = value
 	} else if value[0] == '{' && (value[len(value)-1] == '}' || (value[len(value)-2] == '"' && value[len(value)-1] == ',')) {
 		object, err := parseObject(value)
 		if err != nil {
@@ -223,17 +223,21 @@ func appendValue(propName string, value string, jMap any) error {
 			return err
 		}
 		result = object
-	} else {
-		value = value[:len(value)-1]
-		if value == "true" || value == "false" || value == "null" {
-			result = value
-		} else {
-			num, err := strconv.Atoi(value)
-			if err != nil {
-				return errors.New("invalid value type: " + value)
-			}
-			result = num
+	} else if value[len(value)-1] == '"' && value[0] == '"' {
+		value = value[1 : len(value)-1]
+		switch value {
+		case "true":
+			result = true
+		case "false":
+			result = false
 		}
+		result = value
+	} else {
+		num, err := strconv.Atoi(value)
+		if err != nil {
+			return errors.New("invalid value type: " + value)
+		}
+		result = num
 	}
 	switch v := (jMap).(type) {
 	case *Object:
@@ -279,7 +283,6 @@ func parseArray(str string) ([]any, error) {
 		}
 
 		if len(stack) == 0 {
-
 			err := appendValue("array", item, &result)
 			if err != nil {
 				fmt.Println("err append in parse array")
