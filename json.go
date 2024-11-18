@@ -64,6 +64,12 @@ func getHelper(jsonData any, holder any, path string) error {
 				jsonArrayOfObject = append(jsonArrayOfObject, object)
 			}
 			*h = jsonArrayOfObject
+		case *int:
+			intValue, ok := jsonData.(int)
+			if !ok {
+				return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
+			}
+			*h = intValue
 		default:
 			return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
 		}
