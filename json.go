@@ -267,7 +267,14 @@ func parseArray(str string) ([]any, error) {
 	item := ""
 	for index < len(rawR) {
 		char := rawR[index]
+
+		if char == '\\' && rawR[index-1] != '\\' {
+			index += 2
+			continue
+		}
+
 		item += string(char)
+
 		if item == "," || (index == len(rawR)-1 && char == ']') {
 			item = ""
 			index++
