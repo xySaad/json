@@ -41,31 +41,31 @@ func getHelper(jsonData any, holder any, path string) error {
 		case *[]any:
 			jsonArray, ok := jsonData.([]any)
 			if !ok {
-				return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+				return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
 			}
 			*h = jsonArray
 		case *Object:
 			jsonObject, ok := jsonData.(Object)
 			if !ok {
-				return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+				return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
 			}
 			*h = jsonObject
 		case *[]Object:
 			jsonArray, ok := jsonData.([]any)
 			if !ok {
-				return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+				return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
 			}
 			var jsonArrayOfObject []Object
 			for _, arrayElement := range jsonArray {
 				object, ok := arrayElement.(Object)
 				if !ok {
-					return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+					return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
 				}
 				jsonArrayOfObject = append(jsonArrayOfObject, object)
 			}
 			*h = jsonArrayOfObject
 		default:
-			return errors.New("mismatched types" + reflect.TypeOf(jsonData).String() + reflect.TypeOf(holder).String())
+			return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
 		}
 		return nil
 	}
