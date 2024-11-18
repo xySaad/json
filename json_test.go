@@ -37,11 +37,11 @@ func ExampleDecode() {
 
 	fmt.Println(ArtistN5)
 
-	// You access any key of the artist object easily by indexing it.
+	// You can access any key of the artist object easily by indexing it.
 	// Example accessing members:
 	fmt.Println(ArtistN5["members"])
 
-	// You also access a value from a nested JSON directly.
+	// You can also access a value from a nested JSON directly.
 	// Example accessing the id of the 9th artist:
 	var id int
 	err = jsonData.Get(&id, "[8].id")
