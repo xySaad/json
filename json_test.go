@@ -2,20 +2,14 @@ package json_test
 
 import (
 	"fmt"
-	"io"
-	"net/http"
+	"os"
 
 	"github.com/xySaad/json"
 )
 
 func ExampleDecode() {
-	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
-	if err != nil {
-		panic(err)
-	}
-	defer resp.Body.Close()
 
-	rawJson, err := io.ReadAll(resp.Body)
+	rawJson, err := os.ReadFile("./example.json")
 	if err != nil {
 		panic(err)
 	}
@@ -28,7 +22,7 @@ func ExampleDecode() {
 
 	// Retrieve the 5th artist
 	// The expected data is an Object, define a variable to hold the value.
-	var ArtistN5 json.Object
+	var ArtistN5 map[string]any
 	// use the Get method to store the data in the holder
 	err = jsonData.Get(&ArtistN5, "[4]")
 	if err != nil {

@@ -1,0 +1,720 @@
+[
+  {
+    "id": 1,
+    "image": "https://groupietrackers.herokuapp.com/api/images/queen.jpeg",
+    "name": "Queen",
+    "members": [
+      "Freddie Mercury",
+      "Brian May",
+      "John Daecon",
+      "Roger Meddows-Taylor",
+      "Mike Grose",
+      "Barry Mitchell",
+      "Doug Fogie"
+    ],
+    "creationDate": 1970,
+    "firstAlbum": "14-12-1973",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/1",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/1",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/1"
+  },
+  {
+    "id": 2,
+    "image": "https://groupietrackers.herokuapp.com/api/images/soja.jpeg",
+    "name": "SOJA",
+    "members": [
+      "Jacob Hemphill",
+      "Bob Jefferson",
+      "Ryan \"Byrd\" Berty",
+      "Ken Brownell",
+      "Patrick O'Shea",
+      "Hellman Escorcia",
+      "Rafael Rodriguez",
+      "Trevor Young"
+    ],
+    "creationDate": 1997,
+    "firstAlbum": "05-06-2002",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/2",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/2",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/2"
+  },
+  {
+    "id": 3,
+    "image": "https://groupietrackers.herokuapp.com/api/images/pinkfloyd.jpeg",
+    "name": "Pink Floyd",
+    "members": [
+      "David Gilmour",
+      "Syd Barrett",
+      "Roger Waters",
+      "Richard Wright",
+      "Nick Manson",
+      "Bob Klose"
+    ],
+    "creationDate": 1965,
+    "firstAlbum": "05-08-1967",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/3",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/3",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/3"
+  },
+  {
+    "id": 4,
+    "image": "https://groupietrackers.herokuapp.com/api/images/scorpions.jpeg",
+    "name": "Scorpions",
+    "members": [
+      "Klaus Meine",
+      "Rudolf Schenker",
+      "Matthias Jabs",
+      "Pawel Maciwoda",
+      "Mikkey Dee"
+    ],
+    "creationDate": 1965,
+    "firstAlbum": "21-04-1979",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/4",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/4",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/4"
+  },
+  {
+    "id": 5,
+    "image": "https://groupietrackers.herokuapp.com/api/images/xxxtentacion.jpeg",
+    "name": "XXXTentacion",
+    "members": ["Jahseh Dwayne Ricardo Onfroy"],
+    "creationDate": 2013,
+    "firstAlbum": "07-09-2017",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/5",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/5",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/5"
+  },
+  {
+    "id": 6,
+    "image": "https://groupietrackers.herokuapp.com/api/images/macmiller.jpeg",
+    "name": "Mac Miller",
+    "members": ["Malcolm James McCormick"],
+    "creationDate": 2007,
+    "firstAlbum": "29-06-2013",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/6",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/6",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/6"
+  },
+  {
+    "id": 7,
+    "image": "https://groupietrackers.herokuapp.com/api/images/joynerlucas.jpeg",
+    "name": "Joyner Lucas",
+    "members": ["Gary Maurice Lucas Jr."],
+    "creationDate": 2007,
+    "firstAlbum": "13-05-2011",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/7",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/7",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/7"
+  },
+  {
+    "id": 8,
+    "image": "https://groupietrackers.herokuapp.com/api/images/kencricklamar.jpeg",
+    "name": "Kendrick Lamar",
+    "members": ["Kendrick Lamar Duckworth"],
+    "creationDate": 2004,
+    "firstAlbum": "03-11-2012",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/8",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/8",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/8"
+  },
+  {
+    "id": 9,
+    "image": "https://groupietrackers.herokuapp.com/api/images/acdc.jpeg",
+    "name": "ACDC",
+    "members": ["Angus Young", "Chris Slade", "Stevie Young", "Axl Rose"],
+    "creationDate": 1973,
+    "firstAlbum": "11-05-1977",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/9",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/9",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/9"
+  },
+  {
+    "id": 10,
+    "image": "https://groupietrackers.herokuapp.com/api/images/pearljam.jpeg",
+    "name": "Pearl Jam",
+    "members": [
+      "Eddie Vedder",
+      "Mike McCready",
+      "Stone Gossard",
+      "Jeff Ament",
+      "Matt Cameron"
+    ],
+    "creationDate": 1990,
+    "firstAlbum": "03-07-1992",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/10",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/10",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/10"
+  },
+  {
+    "id": 11,
+    "image": "https://groupietrackers.herokuapp.com/api/images/katyperry.jpeg",
+    "name": "Katy Perry",
+    "members": ["Katheryn Elizabeth Hudson"],
+    "creationDate": 2001,
+    "firstAlbum": "04-10-2008",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/11",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/11",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/11"
+  },
+  {
+    "id": 12,
+    "image": "https://groupietrackers.herokuapp.com/api/images/rihanna.jpeg",
+    "name": "Rihanna",
+    "members": ["Robyn Rihanna Fenty"],
+    "creationDate": 2003,
+    "firstAlbum": "10-09-2005",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/12",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/12",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/12"
+  },
+  {
+    "id": 13,
+    "image": "https://groupietrackers.herokuapp.com/api/images/genesis.jpeg",
+    "name": "Genesis",
+    "members": [
+      "Mike Rutherford",
+      "Tony Banks",
+      "Phil Collins",
+      "Chester Thompson",
+      "Daryl Stuermer"
+    ],
+    "creationDate": 1967,
+    "firstAlbum": "14-10-1972",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/13",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/13",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/13"
+  },
+  {
+    "id": 14,
+    "image": "https://groupietrackers.herokuapp.com/api/images/philcollins.jpeg",
+    "name": "Phil Collins",
+    "members": ["Phil Collins"],
+    "creationDate": 1966,
+    "firstAlbum": "21-02-1981",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/14",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/14",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/14"
+  },
+  {
+    "id": 15,
+    "image": "https://groupietrackers.herokuapp.com/api/images/ledzeppelin.jpeg",
+    "name": "Led Zeppelin",
+    "members": ["Jimmy Page", "John Paul Jones", "Robert Plant", "John Bonham"],
+    "creationDate": 1968,
+    "firstAlbum": "12-04-1969",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/15",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/15",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/15"
+  },
+  {
+    "id": 16,
+    "image": "https://groupietrackers.herokuapp.com/api/images/jimihendrix.jpeg",
+    "name": "The Jimi Hendrix Experience",
+    "members": ["Jimi Hendrix", "Mitch Mitchell", "Noel Redding", "Billy Cox"],
+    "creationDate": 1966,
+    "firstAlbum": "27-05-1967",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/16",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/16",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/16"
+  },
+  {
+    "id": 17,
+    "image": "https://groupietrackers.herokuapp.com/api/images/beegees.jpeg",
+    "name": "Bee Gees",
+    "members": ["Barry Gib", "Robin Gibb", "Maurice Gibb"],
+    "creationDate": 1958,
+    "firstAlbum": "12-08-1967",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/17",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/17",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/17"
+  },
+  {
+    "id": 18,
+    "image": "https://groupietrackers.herokuapp.com/api/images/deeppurple.jpeg",
+    "name": "Deep Purple",
+    "members": [
+      "Ian Paice",
+      "Ian Gillan",
+      "Roger Glover",
+      "Steve Morse",
+      "Don Airey"
+    ],
+    "creationDate": 1968,
+    "firstAlbum": "24-01-1970",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/18",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/18",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/18"
+  },
+  {
+    "id": 19,
+    "image": "https://groupietrackers.herokuapp.com/api/images/aerosmith.jpeg",
+    "name": "Aerosmith",
+    "members": [
+      "Steven Tyler",
+      "Tom Hamilton",
+      "Joey Kramer",
+      "Joe Perry",
+      "Brad Whitford"
+    ],
+    "creationDate": 1970,
+    "firstAlbum": "05-09-1987",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/19",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/19",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/19"
+  },
+  {
+    "id": 20,
+    "image": "https://groupietrackers.herokuapp.com/api/images/direstraits.jpeg",
+    "name": "Dire Straits",
+    "members": [
+      "Mark Knopfler",
+      "David Knopfler",
+      "John Illsley",
+      "Pick Withers"
+    ],
+    "creationDate": 1977,
+    "firstAlbum": "22-07-1978",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/20",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/20",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/20"
+  },
+  {
+    "id": 21,
+    "image": "https://groupietrackers.herokuapp.com/api/images/mamonasassassinas.jpeg",
+    "name": "Mamonas Assassinas",
+    "members": [
+      "Dinho",
+      "Bento Hinoto",
+      "Júlio Rasec",
+      "Sérgio Reoli",
+      "Samuel Reis de Oliveira"
+    ],
+    "creationDate": 1995,
+    "firstAlbum": "23-06-1995",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/21",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/21",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/21"
+  },
+  {
+    "id": 22,
+    "image": "https://groupietrackers.herokuapp.com/api/images/30.jpeg",
+    "name": "Thirty Seconds to Mars",
+    "members": [
+      "Jared Leto",
+      "Shannon Leto",
+      "Tomo Miličević",
+      "Matt Wachter",
+      "Solon Bixler"
+    ],
+    "creationDate": 1998,
+    "firstAlbum": "27-06-2002",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/22",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/22",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/22"
+  },
+  {
+    "id": 23,
+    "image": "https://groupietrackers.herokuapp.com/api/images/imagineDragons.jpeg",
+    "name": "Imagine Dragons",
+    "members": ["Dan Reynolds", "Daniel Wayne Sermon", "Ben McKee"],
+    "creationDate": 2008,
+    "firstAlbum": "04-09-2012",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/23",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/23",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/23"
+  },
+  {
+    "id": 24,
+    "image": "https://groupietrackers.herokuapp.com/api/images/juiceWrld.jpeg",
+    "name": "Juice Wrld",
+    "members": [" Jarad Higgins"],
+    "creationDate": 2015,
+    "firstAlbum": "23-05-2018",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/24",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/24",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/24"
+  },
+  {
+    "id": 25,
+    "image": "https://groupietrackers.herokuapp.com/api/images/logic.jpeg",
+    "name": "Logic",
+    "members": ["Sir Robert Bryson Hall II"],
+    "creationDate": 2009,
+    "firstAlbum": "22-09-2015",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/25",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/25",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/25"
+  },
+  {
+    "id": 26,
+    "image": "https://groupietrackers.herokuapp.com/api/images/alecBeenjamin.jpeg",
+    "name": "Alec Benjamin",
+    "members": ["Alec Benjamin"],
+    "creationDate": 2013,
+    "firstAlbum": "15-11-2018",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/26",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/26",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/26"
+  },
+  {
+    "id": 27,
+    "image": "https://groupietrackers.herokuapp.com/api/images/bobbyMcFerrin.jpeg",
+    "name": "Bobby McFerrins",
+    "members": ["Bobby McFerrin"],
+    "creationDate": 1977,
+    "firstAlbum": "01-09-1982",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/27",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/27",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/27"
+  },
+  {
+    "id": 28,
+    "image": "https://groupietrackers.herokuapp.com/api/images/R3HAB.jpeg",
+    "name": "R3HAB",
+    "members": ["Fadil El Ghoul"],
+    "creationDate": 2008,
+    "firstAlbum": "09-12-2014",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/28",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/28",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/28"
+  },
+  {
+    "id": 29,
+    "image": "https://groupietrackers.herokuapp.com/api/images/postmalone.jpeg",
+    "name": "Post Malone",
+    "members": ["Post Malone"],
+    "creationDate": 2013,
+    "firstAlbum": "13-05-2016",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/29",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/29",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/29"
+  },
+  {
+    "id": 30,
+    "image": "https://groupietrackers.herokuapp.com/api/images/travisScott.jpeg",
+    "name": "Travis Scott",
+    "members": ["Jacques Bermon Webster II"],
+    "creationDate": 2008,
+    "firstAlbum": "18-08-2014",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/30",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/30",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/30"
+  },
+  {
+    "id": 31,
+    "image": "https://groupietrackers.herokuapp.com/api/images/jCole.jpeg",
+    "name": "J. Cole",
+    "members": ["Jermaine Lamarr Cole"],
+    "creationDate": 2007,
+    "firstAlbum": "04-05-2007",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/31",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/31",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/31"
+  },
+  {
+    "id": 32,
+    "image": "https://groupietrackers.herokuapp.com/api/images/nickelback.jpeg",
+    "name": "Nickelback",
+    "members": [
+      "Chad Kroeger",
+      "Ryan Peake",
+      "Mike Kroeger",
+      "Daniel Adair",
+      "Brandon Kroeger",
+      "Ryan Vikedal",
+      "Mitch Guindon"
+    ],
+    "creationDate": 1995,
+    "firstAlbum": "04-09-1996",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/32",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/32",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/32"
+  },
+  {
+    "id": 33,
+    "image": "https://groupietrackers.herokuapp.com/api/images/mobbDeep.jpeg",
+    "name": "Mobb Deep",
+    "members": ["Prodigy", "Havoc"],
+    "creationDate": 1991,
+    "firstAlbum": "23-04-1993",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/33",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/33",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/33"
+  },
+  {
+    "id": 34,
+    "image": "https://groupietrackers.herokuapp.com/api/images/gunsNRoses.jpeg",
+    "name": "Guns N' Roses",
+    "members": [
+      "Axl Rose",
+      "Duff McKagan",
+      "Slash",
+      "Dizzy Reed",
+      "Richard Fortus",
+      "Frank Ferrer",
+      "Melissa Reese"
+    ],
+    "creationDate": 1985,
+    "firstAlbum": "21-07-1987",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/34",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/34",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/34"
+  },
+  {
+    "id": 35,
+    "image": "https://groupietrackers.herokuapp.com/api/images/nwa.jpeg",
+    "name": "NWA",
+    "members": [
+      "Ice Cube",
+      "Eazy-E",
+      "Dr. Dre",
+      "MC Ren",
+      "DJ Yella",
+      "The D.O.C.",
+      "Arabian Prince"
+    ],
+    "creationDate": 1998,
+    "firstAlbum": "03-11-1998",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/35",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/35",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/35"
+  },
+  {
+    "id": 36,
+    "image": "https://groupietrackers.herokuapp.com/api/images/u2.jpeg",
+    "name": "U2",
+    "members": [
+      "Bono",
+      "The Edge",
+      "Adam Clayton",
+      "Larry Mullen Jr.",
+      "Ivan McCormick",
+      "Peter Martin",
+      "Dick Evans"
+    ],
+    "creationDate": 1976,
+    "firstAlbum": "06-12-1980",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/36",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/36",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/36"
+  },
+  {
+    "id": 37,
+    "image": "https://groupietrackers.herokuapp.com/api/images/arcticmonkeys.jpeg",
+    "name": "Arctic Monkeys",
+    "members": [
+      "Alex Turner",
+      "Matt Helders",
+      "Jamie Cook",
+      "Nick O'Malley",
+      "Andy Nicholson",
+      "Glyn Jones"
+    ],
+    "creationDate": 2002,
+    "firstAlbum": "23-04-2007",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/37",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/37",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/37"
+  },
+  {
+    "id": 38,
+    "image": "https://groupietrackers.herokuapp.com/api/images/fallOutBoy.jpeg",
+    "name": "Fall Out Boy",
+    "members": ["Pete Wentz", "Patrick Stump", "Andy Hurley", "Joe Trohman"],
+    "creationDate": 2001,
+    "firstAlbum": "25-03-2003",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/38",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/38",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/38"
+  },
+  {
+    "id": 39,
+    "image": "https://groupietrackers.herokuapp.com/api/images/gorillaz.jpeg",
+    "name": "Gorillaz",
+    "members": ["Damon Albarn", "Jamie Hewlett", "Remi Kabaka Jr."],
+    "creationDate": 1998,
+    "firstAlbum": "26-03-2001",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/39",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/39",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/39"
+  },
+  {
+    "id": 40,
+    "image": "https://groupietrackers.herokuapp.com/api/images/eagles.jpeg",
+    "name": "Eagles",
+    "members": ["Glenn Frey", "Don Henley", "Randy Meisner", "Bernie Leadon"],
+    "creationDate": 1971,
+    "firstAlbum": "01-06-1972",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/40",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/40",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/40"
+  },
+  {
+    "id": 41,
+    "image": "https://groupietrackers.herokuapp.com/api/images/linkinpark.jpeg",
+    "name": "Linkin Park",
+    "members": [
+      "Chester Bennington",
+      "Mike Shinoda",
+      "Brad Delson",
+      "Dave Farrell",
+      "Joe Hahn",
+      "Rob Bourdon"
+    ],
+    "creationDate": 1996,
+    "firstAlbum": "27-01-2001",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/41",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/41",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/41"
+  },
+  {
+    "id": 42,
+    "image": "https://groupietrackers.herokuapp.com/api/images/redhotchilipeppers.jpeg",
+    "name": "Red Hot Chili Peppers",
+    "members": ["Anthony Kiedis", "Flea", "Chad Smith", "Josh Klinghoffer"],
+    "creationDate": 1983,
+    "firstAlbum": "10-02-1990",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/42",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/42",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/42"
+  },
+  {
+    "id": 43,
+    "image": "https://groupietrackers.herokuapp.com/api/images/eminem.jpeg",
+    "name": "Eminem",
+    "members": ["Marshall Bruce Mathers"],
+    "creationDate": 1996,
+    "firstAlbum": "10-04-1999",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/43",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/43",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/43"
+  },
+  {
+    "id": 44,
+    "image": "https://groupietrackers.herokuapp.com/api/images/greenday.jpeg",
+    "name": "Green Day",
+    "members": ["Billie Joe Armstrong", "Mike Dirnt", "Tré Cool"],
+    "creationDate": 1986,
+    "firstAlbum": "18-06-1994",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/44",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/44",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/44"
+  },
+  {
+    "id": 45,
+    "image": "https://groupietrackers.herokuapp.com/api/images/metallica.jpeg",
+    "name": "Metallica",
+    "members": [
+      "James Hetfield",
+      "Lars Ulrich",
+      "Kirk Hammett",
+      "Robert Trujillo"
+    ],
+    "creationDate": 1981,
+    "firstAlbum": "22-08-1987",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/45",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/45",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/45"
+  },
+  {
+    "id": 46,
+    "image": "https://groupietrackers.herokuapp.com/api/images/coldplay.jpeg",
+    "name": "Coldplay",
+    "members": [
+      "Chris Martin",
+      "Guy Berryman",
+      "Jonny Buckland",
+      "Will Champion"
+    ],
+    "creationDate": 1996,
+    "firstAlbum": "22-07-2000",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/46",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/46",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/46"
+  },
+  {
+    "id": 47,
+    "image": "https://groupietrackers.herokuapp.com/api/images/maroon5.jpeg",
+    "name": "Maroon 5",
+    "members": [
+      "Adam Levine",
+      "Jesse Carmichael",
+      "Mickey Madden",
+      "James Valentine",
+      "Matt Flynn",
+      "PJ Morton",
+      "Sam Farrar"
+    ],
+    "creationDate": 1994,
+    "firstAlbum": "31-01-2004",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/47",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/47",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/47"
+  },
+  {
+    "id": 48,
+    "image": "https://groupietrackers.herokuapp.com/api/images/twentyonepilots.jpeg",
+    "name": "Twenty One Pilots",
+    "members": ["Tyler Joseph", "Josh Dun"],
+    "creationDate": 2009,
+    "firstAlbum": "14-09-2013",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/48",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/48",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/48"
+  },
+  {
+    "id": 49,
+    "image": "https://groupietrackers.herokuapp.com/api/images/therollingstones.jpeg",
+    "name": "The Rolling Stones",
+    "members": ["Mick Jagger ", "Keith Richards", "Charlie Watts", "Ron Wood"],
+    "creationDate": 1962,
+    "firstAlbum": "31-07-1963",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/49",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/49",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/49"
+  },
+  {
+    "id": 50,
+    "image": "https://groupietrackers.herokuapp.com/api/images/muse.jpeg",
+    "name": "Muse",
+    "members": [
+      "Matthew Bellamy",
+      "Christopher Wolstenholme",
+      "Dominic Howard "
+    ],
+    "creationDate": 1994,
+    "firstAlbum": "26-06-1999",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/50",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/50",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/50"
+  },
+  {
+    "id": 51,
+    "image": "https://groupietrackers.herokuapp.com/api/images/foofighters.jpeg",
+    "name": "Foo Fighters",
+    "members": [
+      "Dave Grohl",
+      "Nate Mendel",
+      "Taylor Hawkins",
+      "Chris Shiflett",
+      "Pat Smear",
+      "Rami Jaffee"
+    ],
+    "creationDate": 1994,
+    "firstAlbum": "01-07-1995",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/51",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/51",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/51"
+  },
+  {
+    "id": 52,
+    "image": "https://groupietrackers.herokuapp.com/api/images/thechainsmokers.jpeg",
+    "name": "The Chainsmokers",
+    "members": ["Alexander Pall", "Andrew Taggart", "Matt McGuire", "Tony Ann"],
+    "creationDate": 2008,
+    "firstAlbum": "15-03-2014",
+    "locations": "https://groupietrackers.herokuapp.com/api/locations/52",
+    "concertDates": "https://groupietrackers.herokuapp.com/api/dates/52",
+    "relations": "https://groupietrackers.herokuapp.com/api/relation/52"
+  }
+]

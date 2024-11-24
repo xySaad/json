@@ -2,10 +2,7 @@
 
 A Go package for parsing and manipulating JSON data. This package provides functionality to decode JSON strings into Go data structures and allows for easy retrieval of values using a path-like syntax.
 
-### The package isn't fully yet.
-
-- it doesn't handle escaped characters other than `\"`
-- Get method doesn't work with all data types
+### The package doesn't support structs yet, only maps
 
 ## Features
 

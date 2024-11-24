@@ -19,67 +19,30 @@ type token struct {
 	sep   rune
 }
 
-type (
-	stateMap map[rune]*token
-	Object   map[string]any
-)
+type stateMap map[rune]*token
+
 type getter interface {
 	Get(holder any, path string) error
 }
 
-func (o Object) Get(holder any, path string) error {
-	err := getHelper(o, holder, path)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 func getHelper(jsonData any, holder any, path string) error {
 	if len(path) == 0 {
-		switch h := holder.(type) {
-		case *[]any:
-			jsonArray, ok := jsonData.([]any)
-			if !ok {
-				return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
-			}
-			*h = jsonArray
-		case *Object:
-			jsonObject, ok := jsonData.(Object)
-			if !ok {
-				return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
-			}
-			*h = jsonObject
-		case *[]Object:
-			jsonArray, ok := jsonData.([]any)
-			if !ok {
-				return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
-			}
-			var jsonArrayOfObject []Object
-			for _, arrayElement := range jsonArray {
-				object, ok := arrayElement.(Object)
-				if !ok {
-					return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
-				}
-				jsonArrayOfObject = append(jsonArrayOfObject, object)
-			}
-			*h = jsonArrayOfObject
-		case *int:
-			intValue, ok := jsonData.(int)
-			if !ok {
-				return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
-			}
-			*h = intValue
-		default:
-			return errors.New("mismatched types " + reflect.TypeOf(jsonData).String() + " " + reflect.TypeOf(holder).String())
+		jsonType := reflect.TypeOf(jsonData)
+		holderType := reflect.TypeOf(holder)
+
+		// Ensure holder is a pointer and assignable
+		if holderType.Kind() == reflect.Pointer && jsonType.AssignableTo(holderType.Elem()) {
+			reflect.ValueOf(holder).Elem().Set(reflect.ValueOf(jsonData))
+			return nil
 		}
-		return nil
+
+		return errors.New(fmt.Sprintln("can't assign", jsonType, "to", holderType))
 	}
 	if path[0] == '.' {
 		path = path[1:]
 	}
 	if path[0] != '[' {
-		object, ok := jsonData.(Object)
+		object, ok := jsonData.(map[string]any)
 		if !ok {
 			return errors.New("err getting")
 		}
@@ -197,7 +160,7 @@ func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *toke
 	return nil
 }
 
-func createProperty(propName string, jMap *Object) error {
+func createProperty(propName string, jMap *map[string]any) error {
 	if len(propName) > 0 {
 		(*jMap)[propName[:len(propName)-1]] = nil
 	}
@@ -245,7 +208,7 @@ func appendValue(propName string, value string, jMap any) error {
 		result = num
 	}
 	switch v := (jMap).(type) {
-	case *Object:
+	case *map[string]any:
 		if len(propName) > 0 {
 			(*v)[propName[:len(propName)-1]] = result
 		}
@@ -307,14 +270,14 @@ func parseArray(str string) ([]any, error) {
 	return result, nil
 }
 
-func parseObject(raw string) (Object, error) {
+func parseObject(raw string) (map[string]any, error) {
 	raw = strings.TrimSpace(raw)
 	rawR := []rune(raw[1 : len(raw)-1])
 	state := stateMap{}.init()
 	stack := []rune{}
 	index := 0
 	depth := 0
-	result := Object{}
+	result := map[string]any{}
 	property := ""
 	var value string
 	inProp := false
