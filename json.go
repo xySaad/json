@@ -122,14 +122,13 @@ func (s stateMap) init() stateMap {
 	value := &token{start: ':', end: ',', depth: -1}
 
 	return stateMap{
-		'{':  object,
-		'}':  object,
-		'[':  array,
-		']':  array,
-		'"':  &token{start: '"', end: '"', depth: -1},
-		':':  value,
-		',':  value,
-		'\\': &token{start: '\\', end: '"', depth: -1},
+		'{': object,
+		'}': object,
+		'[': array,
+		']': array,
+		'"': &token{start: '"', end: '"', depth: -1},
+		':': value,
+		',': value,
 	}
 }
 
@@ -174,7 +173,7 @@ func decoderHelper(state stateMap, stack *[]rune, depth *int, char rune, t *toke
 	} else if len(*stack) > 0 && state[(*stack)[len(*stack)-1]].sep == char {
 	} else if char == t.end {
 		if len(*stack) > 0 {
-			if state[(*stack)[len(*stack)-1]].start != t.start && state[(*stack)[len(*stack)-1]].start != '\\' {
+			if state[(*stack)[len(*stack)-1]].start != t.start {
 				if state[(*stack)[len(*stack)-1]].end == ',' && isLastChar {
 					*stack = (*stack)[:len(*stack)-1]
 
