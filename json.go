@@ -273,12 +273,9 @@ func parseArray(str string) ([]any, error) {
 	for index < len(rawR) {
 		char := rawR[index]
 
-		if char == '\\' && rawR[index-1] != '\\' {
-			index += 2
-			continue
+		if !(depth == 0 && char == '\\' && rawR[index+1] != '\\' && len(stack) > 0 && stack[len(stack)-1] == '"') {
+			item += string(char)
 		}
-
-		item += string(char)
 
 		if item == "," || (index == len(rawR)-1 && char == ']') {
 			item = ""
@@ -286,7 +283,7 @@ func parseArray(str string) ([]any, error) {
 			continue
 		}
 		t, exist := state[char]
-		if exist {
+		if exist && !(index > 0 && rawR[index-1] == '\\') {
 			err := decoderHelper(state, &stack, &depth, char, t, index == len(rawR)-1, index)
 			if err != nil {
 				fmt.Println("err decoderHelper in parseArray")
@@ -329,7 +326,9 @@ func parseObject(raw string) (Object, error) {
 		if inProp && !inValue {
 			property += string(char)
 		} else if inValue {
-			value += string(char)
+			if !(depth == 0 && char == '\\' && rawR[index+1] != '\\' && len(stack) > 0 && stack[len(stack)-1] == '"') {
+				value += string(char)
+			}
 		}
 		if char == '{' {
 		} else if char == '"' {
@@ -354,7 +353,7 @@ func parseObject(raw string) (Object, error) {
 			return nil, errors.New("expected1: " + string(state[(stack)[len(stack)-1]].end) + " found: " + string(char))
 		}
 		t, exist := state[char]
-		if exist {
+		if exist && !(index > 0 && rawR[index-1] == '\\') {
 			err := decoderHelper(state, &stack, &depth, char, t, index == len(rawR)-1, index)
 			if err != nil {
 				fmt.Println("err decoderHelper in parseObject")
